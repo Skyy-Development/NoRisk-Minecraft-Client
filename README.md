@@ -1,9 +1,7 @@
 ## Issues
 
-If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/NoRiskClient/issues/issues/new/choose).
-
+If you notice any bugs or missing features, you can let us know by opening an issue
 ## License
-This code is originally forked from [LiquidLauncher](https://github.com/CCBlueX/LiquidLauncher).
 
 Therefore, this project is also subject to the [GNU General Public License v3.0](LICENSE). This does only apply for source code located directly in this clean repository. During the development and compilation process, additional source code may be used to which we have obtained no rights. Such code is not covered by the GPL license.
 
@@ -23,7 +21,7 @@ Do the above and share your source code with everyone; just like we do.
 
 ## Compile it yourself!
 NoRiskClient launcher is using Tauri and is written in the programming language Rust, so make sure that it is installed properly. Instructions can be found on [Rust's website](https://www.rust-lang.org/learn/get-started). It also requires NodeJS.
-1. Clone the repository using `git clone --recurse-submodules https://github.com/NoRiskClient/noriskclient-launcher`. 
+1. Clone the repository
 2. Navigate into your local repository folder.
 3. Execute the command `npm i`
 4. Now you can start the launcher using `npm run tauri dev` or build it by using `npm run tauri build`
