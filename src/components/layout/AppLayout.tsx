@@ -25,6 +25,8 @@ import { RetroGridEffect } from "../effects/RetroGridEffect";
 import PlainBackground from "../effects/PlainBackground";
 import { StarfieldEffect } from "../effects/StarfieldEffect";
 import { FirefliesEffect } from "../effects/FirefliesEffect";
+import { PulseWaveEffect } from "../effects/PulseWaveEffect";
+
 import * as ConfigService from "../../services/launcher-config-service";
 import { SocialsModal } from "../modals/SocialsModal";
 import { exit, relaunch } from '@tauri-apps/plugin-process';
@@ -263,6 +265,15 @@ export function AppLayout({
             fireflyCount={qualityParams.particleCount}
           />
         );
+      case BACKGROUND_EFFECTS.PULSE_WAVE:
+        return (
+          <PulseWaveEffect
+            opacity={qualityParams.opacity * 1.5}
+            speed={qualityParams.speed}
+            waveCount={Math.floor(qualityParams.particleCount / 10)}
+          />
+        );
+
       default:
         return (
           <div className="absolute inset-0 bg-red-500/20">
@@ -387,7 +398,7 @@ function HeaderBar({ minimizeRef, maximizeRef, closeRef }: HeaderBarProps) {
             className="font-minecraft text-4xl tracking-wider text-white font-bold lowercase text-shadow"
             data-tauri-drag-region
           >
-            noriskclient
+            NoRiskClient 
           </h1>
           <span className="text-white/70 font-minecraft-ten text-[8px] font-normal -mt-2.5">
             {appVersion || "v?.?.?"}

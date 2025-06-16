@@ -45,6 +45,8 @@ export function SettingsTab() {
     staticBackground,
     toggleStaticBackground,
     toggleBackgroundAnimation,
+    isMusicReactivityEnabled,
+    toggleMusicReactivity
   } = useThemeStore();
   const { currentEffect, setCurrentEffect } = useBackgroundEffectStore();
   const { qualityLevel, setQualityLevel } = useQualitySettingsStore();
@@ -109,6 +111,11 @@ export function SettingsTab() {
       id: BACKGROUND_EFFECTS.FIREFLIES,
       name: "Fireflies",
       icon: "solar:bug-minimalistic-bold",
+    },
+    {
+      id: BACKGROUND_EFFECTS.PULSE_WAVE,
+      name: "Pulse Wave",
+      icon: "solar:wave-square-bold",
     },
   ];
 
@@ -590,6 +597,24 @@ export function SettingsTab() {
             size="lg"
           />
         </div>
+        
+        <div className="mt-4 flex items-center justify-between p-3 rounded-lg border border-[#ffffff20] hover:bg-black/30 transition-colors">
+          <div className="flex-1">
+            <h5 className="font-minecraft text-2xl lowercase text-white">
+              Music Reactivity
+            </h5>
+            <p className="text-sm text-white/60 font-minecraft-ten mt-1">
+              Make background animations react to music. Requires microphone access.
+            </p>
+          </div>
+          <ToggleSwitch
+            checked={isMusicReactivityEnabled}
+            onChange={toggleMusicReactivity}
+            disabled={saving || staticBackground}
+            size="lg"
+          />
+        </div>
+
       </Card>
 
       <Card variant="flat" className="p-6">

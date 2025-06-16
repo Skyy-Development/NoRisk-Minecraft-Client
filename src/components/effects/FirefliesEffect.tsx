@@ -31,7 +31,7 @@ export function FirefliesEffect({
   speed = 1,
   className,
   forceEnable = false,
-  fireflyCount = 50,
+  fireflyCount = 100,
 }: FirefliesEffectProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const accentColor = useThemeStore((state) => state.accentColor);

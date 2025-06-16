@@ -15,6 +15,7 @@ export enum BACKGROUND_EFFECTS {
   PLAIN_BACKGROUND = "plain-background",
   STARFIELD = "starfield",
   FIREFLIES = "fireflies",
+  PULSE_WAVE = "pulse-wave",
 }
 
 interface BackgroundEffectState {

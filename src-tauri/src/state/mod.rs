@@ -7,6 +7,7 @@ pub mod post_init;
 pub mod process_state;
 pub mod profile_state;
 pub mod skin_state;
+pub mod cape_state;
 pub mod state_manager;
 
 pub use state_manager::State;

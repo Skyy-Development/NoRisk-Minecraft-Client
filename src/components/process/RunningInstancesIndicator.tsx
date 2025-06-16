@@ -28,6 +28,7 @@ export function RunningInstancesIndicator({
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [stoppingId, setStoppingId] = useState<string | null>(null);
   const [viewingLogsId, setViewingLogsId] = useState<string | null>(null);
+  const [restartingId, setRestartingId] = useState<string | null>(null);
   const [imageLoadErrors, setImageLoadErrors] = useState<Set<string>>(
     new Set(),
   );
@@ -86,6 +87,32 @@ export function RunningInstancesIndicator({
     } finally {
       setStoppingId(null);
       setTimeout(() => fetchProcesses(), 500);
+    }
+  };
+
+  const handleRestartProcess = async (process: ProcessMetadata, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRestartingId(process.id);
+    try {
+      // First stop the current process
+      await ProcessService.stopProcess(process.id);
+      console.log(
+        `[RunningInstancesIndicator] Process ${process.id} stopped for restart.`,
+      );
+      
+      // Then launch the profile again
+      await ProcessService.launch(process.profile_id);
+      console.log(
+        `[RunningInstancesIndicator] Profile ${process.profile_id} launched for restart.`,
+      );
+    } catch (err) {
+      console.error(
+        `[RunningInstancesIndicator] Failed to restart process ${process.id}:`,
+        err,
+      );
+    } finally {
+      setRestartingId(null);
+      setTimeout(() => fetchProcesses(), 1000);
     }
   };
 
@@ -303,8 +330,25 @@ export function RunningInstancesIndicator({
                         />
                       )}
                       <IconButton
+                        onClick={(e) => handleRestartProcess(process, e)}
+                        disabled={restartingId === process.id || stoppingId === process.id}
+                        size="xs"
+                        className="h-8 w-8 p-1.5 bg-white/10 text-green-400 hover:bg-white/20 hover:text-green-300 ring-1 ring-green-500 focus:ring-2 focus:ring-green-500/50"
+                        icon={
+                          restartingId === process.id ? (
+                            <Icon
+                              icon="solar:spinner-bold"
+                              className="w-4 h-4 animate-spin"
+                            />
+                          ) : (
+                            <Icon icon="solar:refresh-bold" className="w-4 h-4" />
+                          )
+                        }
+                        aria-label="Restart Process"
+                      />
+                      <IconButton
                         onClick={(e) => handleStopProcess(process.id, e)}
-                        disabled={stoppingId === process.id}
+                        disabled={stoppingId === process.id || restartingId === process.id}
                         variant="destructive"
                         size="xs"
                         className="h-8 w-8 p-1.5 bg-white/10 hover:bg-white/20 hover:text-red-400 ring-1 ring-red-500 focus:ring-2 focus:ring-red-500/50"

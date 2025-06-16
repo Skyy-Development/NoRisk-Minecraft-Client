@@ -10,6 +10,7 @@ use crate::state::post_init::PostInitializationHandler;
 use crate::state::process_state::{default_processes_path, ProcessManager};
 use crate::state::profile_state::ProfileManager;
 use crate::state::skin_state::{default_skins_path, SkinManager};
+use crate::state::cape_state::{default_capes_path, CapeManager};
 use std::sync::Arc;
 use tokio::sync::{OnceCell, Semaphore};
 
@@ -27,6 +28,7 @@ pub struct State {
     pub norisk_version_manager: NoriskVersionManager,
     pub config_manager: ConfigManager,
     pub skin_manager: SkinManager,
+    pub cape_manager: CapeManager,
     pub discord_manager: DiscordManager,
     pub io_semaphore: Arc<Semaphore>,
 }
@@ -45,6 +47,7 @@ impl State {
                 let norisk_pack_manager = NoriskPackManager::new(default_norisk_packs_path())?;
                 let norisk_version_manager = NoriskVersionManager::new(default_norisk_versions_path())?;
                 let skin_manager = SkinManager::new(default_skins_path())?;
+                let cape_manager = CapeManager::new(default_capes_path())?;
                 let profile_manager = ProfileManager::new(LAUNCHER_DIRECTORY.root_dir().join("profiles.json"))?;
                 let process_manager = ProcessManager::new(default_processes_path(), app.clone()).await?;
 
@@ -59,6 +62,7 @@ impl State {
                     norisk_version_manager,
                     config_manager,
                     skin_manager,
+                    cape_manager,
                     discord_manager,
                     io_semaphore,
                 }))
@@ -121,6 +125,12 @@ impl State {
             .on_state_ready(app.clone())
             .await?;
         log::info!("State::init - SkinManager post-initialization complete.");
+
+        initial_state_arc
+            .cape_manager
+            .on_state_ready(app.clone())
+            .await?;
+        log::info!("State::init - CapeManager post-initialization complete.");
 
         initial_state_arc
             .norisk_pack_manager

@@ -14,6 +14,7 @@ pub struct BrowseCapesPayload {
     page: Option<u32>,
     page_size: Option<u32>,
     sort_by: Option<String>,
+    filter_by_id: Option<String>,
     filter_has_elytra: Option<bool>,
     filter_creator: Option<String>,
     time_frame: Option<String>,

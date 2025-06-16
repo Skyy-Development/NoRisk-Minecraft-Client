@@ -89,7 +89,6 @@ impl JavaInstallation {
                     17 => self.major_version >= 16,
                     // Minecraft 1.18+ uses Java 17+
                     18..=u32::MAX => self.major_version >= 17,
-                    _ => false,
                 }
             }
             _ => false,

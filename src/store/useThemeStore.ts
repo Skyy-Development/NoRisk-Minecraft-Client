@@ -215,6 +215,8 @@ interface ThemeState {
   acceptTermsOfService: () => void;
   uiTransparency: number;
   setUiTransparency: (value: number) => void;
+  isMusicReactivityEnabled: boolean;
+  toggleMusicReactivity: () => void;
 }
 
 export const useThemeStore = create<ThemeState>()(
@@ -227,6 +229,7 @@ export const useThemeStore = create<ThemeState>()(
       staticBackground: true,
       hasAcceptedTermsOfService: false,
       uiTransparency: 50,
+      isMusicReactivityEnabled: false,
 
       setAccentColor: (color: AccentColor) => {
         set({ accentColor: color });
@@ -269,6 +272,10 @@ export const useThemeStore = create<ThemeState>()(
 
       toggleStaticBackground: () => {
         set((state) => ({ staticBackground: !state.staticBackground }));
+      },
+
+      toggleMusicReactivity: () => {
+        set((state) => ({ isMusicReactivityEnabled: !state.isMusicReactivityEnabled }));
       },
 
       acceptTermsOfService: () => {
